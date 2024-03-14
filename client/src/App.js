@@ -2,11 +2,13 @@ import './App.css';
 import Headermint from './Headermint';
 import BoardHeader from './BoardHeader';
 import PostForm from './PostForm';
+import AuthModal from './AuthModal';
 
 function App() {
   return (
     <>
       <Headermint />
+      <AuthModal />
       <BoardHeader />
       <PostForm />
       <div className='px-6 bg-gray-950 text-gray-400'>

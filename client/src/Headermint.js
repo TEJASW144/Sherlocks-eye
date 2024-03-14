@@ -6,7 +6,6 @@ import { useState } from 'react';
 
 function Headermint(){
   const [userDropdownVisibilityClass,setUserDropdownVisibilityClass] = useState(' hidden');
-  // const userDropdownVisibilityClass='hidden';
   function toggleUserDropdown() {
     if (userDropdownVisibilityClass === ' hidden') {
       setUserDropdownVisibilityClass(' block');
@@ -34,7 +33,7 @@ function Headermint(){
         <button className='px-2 py-1'>
           <PlusIcon className='text-gray-400 h-6 w-6 m-1 mx-2'/>
         </button> */}
-        <div className='mx-2'>
+        <div className='mx-2 hidden sm:block'>
         <Button outline className='mr-1'>Log In</Button>
         <Button className=''>Sign Up</Button>
         </div>
