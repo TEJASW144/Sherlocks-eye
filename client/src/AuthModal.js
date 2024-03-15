@@ -11,11 +11,11 @@ function AuthModal() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const modalContext = useContext(AuthModalContext);
-  //  const user = useContext(UserContext);
-  const visibleClass = modalContext.show !== false ? "block" : "hidden ";
-  if (modalContext.show && modalContext.show !== modalType) {
-    setModalType(modalContext.show);
-  }
+  // const user = useContext(UserContext);
+  const visibleClass = modalContext.show ? "block" : "hidden";
+  // if (modalContext.show && modalContext.show !== modalType) {
+  //   setModalType(modalContext.show);
+  // }
   function register(e) {
     e.preventDefault();
     const data = { email, username, password };
@@ -40,7 +40,7 @@ function AuthModal() {
       style={{ backgroundColor: "rgba(0,0,0,.6)" }}
     >
       <OutsideClickHandler onOutsideClick={() => modalContext.setShow(false)}>
-        <div className="border border-gray-200  w-3/4 sm:w-1/2 lg:w-1/4 bg-black p-5 text-reddit_text self-center mx-auto rounded-md fixed ">
+        <div className="border border-gray-200  w-3/4 sm:w-1/2 lg:w-1/4 bg-black p-5 text-reddit_text self-center mx-96 my-28 rounded-md  fixed">
           {/* <h1 className='text-white text-2xl mb-3'>Login</h1> */}
           {modalType === "login" && (
             <h1 className="text-white text-2xl mb-5">Login</h1>
