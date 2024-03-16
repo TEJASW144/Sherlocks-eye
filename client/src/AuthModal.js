@@ -1,8 +1,9 @@
 import Button from "./Button";
 import Input from "./Input";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import AuthModalContext from "./AuthModalContext";
+import UserContext from "./UserContext";
 import OutsideClickHandler from "react-outside-click-handler";
 
 function AuthModal() {
@@ -11,27 +12,42 @@ function AuthModal() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const modalContext = useContext(AuthModalContext);
-  // const user = useContext(UserContext);
-  const visibleClass = modalContext.show ? "block" : "hidden";
-  // if (modalContext.show && modalContext.show !== modalType) {
-  //   setModalType(modalContext.show);
-  // }
+  const user = useContext(UserContext);
+  const visibleClass = modalContext.show !== false ? "block" : "hidden";
+
+  if (modalContext.show && modalContext.show !== modalType) {
+    // setModalType(modalContext.show);
+    // console.log(modalContext.show);
+  }
   function register(e) {
     e.preventDefault();
     const data = { email, username, password };
-    axios.post("http://localhost:4000/register", data, {
-      withCredentials: true,
-    });
+    axios
+      .post("http://localhost:4000/register", data, {
+        withCredentials: true,
+      })
 
-    // .then(() => {
-    //   console.log();
-    //   user.setUser({ username });
-    //   modalContext.setShow(false);
-    //   setEmail("");
-    //   setPassword("");
-    //   setUsername("");
-    // });
+      .then(() => {
+        console.log();
+        user.setUser({ username });
+        modalContext.setShow(false);
+        setEmail("");
+        setPassword("");
+        setUsername("");
+      });
   }
+  function login() {
+    const data = { username, password };
+    axios
+      .post("http://localhost:4000/login", data, { withCredentials: true })
+      .then(() => {
+        modalContext.setShow(false);
+        user.setUser({ username });
+        setPassword("");
+        setUsername("");
+      });
+  }
+
   return (
     <div
       className={
@@ -82,6 +98,7 @@ function AuthModal() {
             <Button
               className="w-full py-2 mb-3"
               style={{ borderRadius: ".3rem" }}
+              onClick={() => login()}
             >
               Log In
             </Button>
