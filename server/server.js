@@ -5,6 +5,7 @@ import Cookies from "cookies";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import User from "./models/User.js";
+import Comment from "./models/Comment.js";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 
@@ -15,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://localhost:3001",
     credentials: true,
   })
 );
@@ -26,7 +27,7 @@ function getUserFromToken(token) {
 }
 await mongoose
   .connect(
-    "mongodb+srv://adityagup780:oOgzqnNCPOvAM2xp@cluster0.jls3etc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://vaibhavchaudhary898:q79xfXSJGTXesX47@cluster0.51i05vt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
   )
   .then(() => {
     console.log("Connected to MongoDB");
@@ -94,6 +95,13 @@ app.post("/login", (req, res) => {
 });
 app.post("/logout", (req, res) => {
   res.cookie("token", "").send();
+});
+
+
+app.get('/comments', (req, res) => {
+  Comment.find().then(comments => {
+    res.json(comments);
+  });
 });
 
 app.listen(4000);
