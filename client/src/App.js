@@ -8,10 +8,17 @@ import axios from "axios";
 import AuthModalContext from "./AuthModalContext";
 import UserContext from "./UserContext";
 import Post from "./Post";
+import PostListing from "./PostsListing";
+import {
+  Routes,
+  Route,
+  BrowserRouter as Router
+} from "react-router-dom"
+import Board from "./Board";
 function App() {
   const [showAuthModal, setShowAuthModal] = useState(true);
   const [user, setUser] = useState({});
-  const [comments, setComments] = useState([]);
+  
   useEffect(() => {
     axios
       .get("http://localhost:4000/user", { withCredentials: true })
@@ -22,15 +29,7 @@ function App() {
         console.error("Error fetching user data:", error);
 
       });
-      axios
-      .get("http://localhost:4000/comments", { withCredentials: true })
-      .then((response) => setComments(response.data))
-
-      .catch((error) => {
-        // Handle error here
-        console.error("Error fetching user data:", error);
         
-      });  
   }, []);
   function logout() {
     axios
@@ -44,10 +43,13 @@ function App() {
       >
         <UserContext.Provider value={{ ...user, logout, setUser }}>
           <Headermint />
+          <Router>
+            <Routes>
+              <Route path="/" component={Board} />
+            </Routes>
+          </Router>
           <AuthModal />
-          <BoardHeader />
-          <PostForm />
-          <Post/>
+          
         </UserContext.Provider>
       </AuthModalContext.Provider>
     </>
