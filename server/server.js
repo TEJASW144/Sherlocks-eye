@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -27,7 +27,7 @@ function getUserFromToken(token) {
 }
 await mongoose
   .connect(
-    "mongodb+srv://vaibhavchaudhary898:q79xfXSJGTXesX47@cluster0.51i05vt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://tejasw:ZkR7Rd7rdV4zg25T@cluster0.emfev.mongodb.net/?retryWrites=true&w=majority" 
   )
   .then(() => {
     console.log("Connected to MongoDB");

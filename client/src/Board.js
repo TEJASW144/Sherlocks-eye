@@ -7,6 +7,7 @@ function Board() {
     <BoardHeader />
     <PostForm />
     <PostsListing />
+    
   </div>);
 }
 

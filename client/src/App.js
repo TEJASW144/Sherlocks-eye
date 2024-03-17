@@ -13,7 +13,7 @@ import {
   Routes,
   Route,
   BrowserRouter as Router
-} from "react-router-dom"
+} from "react-router-dom";
 import Board from "./Board";
 function App() {
   const [showAuthModal, setShowAuthModal] = useState(true);
@@ -46,7 +46,7 @@ function App() {
           <Router>
             <Routes>
               <Route path="/" component={Board} />
-            </Routes>
+              </Routes>
           </Router>
           <AuthModal />
           
