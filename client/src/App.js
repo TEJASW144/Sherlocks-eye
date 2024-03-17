@@ -5,6 +5,9 @@ import axios from "axios";
 import AuthModalContext from "./AuthModalContext";
 import UserContext from "./UserContext";
 import Routing from "./Routing";
+
+// import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+
 function App() {
   const [showAuthModal, setShowAuthModal] = useState(true);
   const [user, setUser] = useState({});
