@@ -55,7 +55,8 @@ app.post("/register", (req, res) => {
           console.log(err);
           res.sendStatus(500);
         } else {
-          res.status(201).cookie("token", token).json();
+          console.log(token);
+          res.status(200).cookie("token", token).json();
         }
       });
     })

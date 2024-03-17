@@ -2,6 +2,7 @@ import Button from "./Button";
 import Logo from "./Logo.png";
 import AuthModalContext from "./AuthModalContext";
 import UserContext from "./UserContext";
+import { Link } from "react-router-dom";
 import Avatar from "./png-clipart-computer-icons-avatar-icon-design-avatar-heroes-computer-wallpaper-thumbnail.png";
 import {
   BellIcon,
@@ -30,7 +31,12 @@ function Headermint() {
   return (
     <header className="w-full bg-black p-2">
       <div className="mx-4 flex relative">
-        <img src={Logo} className="w-8 h-9 mr-4 "></img>
+        {/* <Link to="/"> */}
+        <a href="/">
+          <img src={Logo} className="w-8 h-9 mr-4 "></img>
+        </a>
+        {/* </Link> */}
+
         <form
           action=""
           className="bg-reddit_dark-brighter px-3 flex rounded-md border border-reddit_border mx-4 flex-grow"

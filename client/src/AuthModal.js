@@ -19,8 +19,8 @@ function AuthModal() {
     // setModalType(modalContext.show);
     // console.log(modalContext.show);
   }
-  function register(e) {
-    e.preventDefault();
+  function register() {
+    // e.preventDefault();
     const data = { email, username, password };
     axios
       .post("http://localhost:4000/register", data, {
@@ -29,8 +29,8 @@ function AuthModal() {
 
       .then(() => {
         console.log();
-        user.setUser({ username });
         modalContext.setShow(false);
+        user.setUser({ username });
         setEmail("");
         setPassword("");
         setUsername("");
@@ -107,14 +107,14 @@ function AuthModal() {
             <Button
               className="w-full py-2 mb-3"
               style={{ borderRadius: ".3rem" }}
-              onClick={(e) => register(e)}
+              onClick={() => register()}
             >
               Sign Up
             </Button>
           )}
           {modalType === "login" && (
             <div className="text-white">
-              New to Reddit?{" "}
+              New to Anonymity?{" "}
               <button
                 className="text-blue-600"
                 onClick={() => setModalType("register")}
@@ -125,7 +125,7 @@ function AuthModal() {
           )}
           {modalType === "register" && (
             <div className="text-white">
-              Already have an account?{" "}
+              Already a member of it?{" "}
               <button
                 className="text-blue-600"
                 onClick={() => setModalType("login")}

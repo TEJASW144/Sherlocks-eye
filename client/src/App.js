@@ -1,17 +1,10 @@
 import "./App.css";
-import Headermint from "./Headermint";
-import BoardHeader from "./BoardHeader";
-import Board from "./Board";
-import PostForm from "./PostForm";
 import AuthModal from "./AuthModal";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import AuthModalContext from "./AuthModalContext";
 import UserContext from "./UserContext";
-import PostsListing from "./PostsListing";
-import Post from "./Post";
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import CommentPage from "./CommentPage";
+import Routing from "./Routing";
 function App() {
   const [showAuthModal, setShowAuthModal] = useState(true);
   const [user, setUser] = useState({});
@@ -43,14 +36,7 @@ function App() {
         value={{ show: showAuthModal, setShow: setShowAuthModal }}
       >
         <UserContext.Provider value={{ ...user, logout, setUser }}>
-          <Headermint />
-
-          <Router>
-            <Switch>
-              <Route path="/" component={Board} />
-              {/* <Route exact path="/comments/:id" component={CommentPage} /> */}
-            </Switch>
-          </Router>
+          <Routing />
           <AuthModal />
         </UserContext.Provider>
       </AuthModalContext.Provider>
