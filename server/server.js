@@ -19,7 +19,7 @@ app.use(
     origin: "http://localhost:3000",
     credentials: true,
   })
-);
+); //mongodb+srv://adityagup780:zc9thTZGlXboGuut@cluster0.jls3etc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
 function getUserFromToken(token) {
   const userInfo = jwt.verify(token, secret);
   console.log(userInfo);
@@ -55,7 +55,7 @@ app.post("/register", (req, res) => {
           console.log(err);
           res.sendStatus(500);
         } else {
-          res.status(201).cookie("token", token).send();
+          res.status(201).cookie("token", token).json();
         }
       });
     })
@@ -66,7 +66,9 @@ app.post("/register", (req, res) => {
 });
 app.get("/user", (req, res) => {
   const token = req.cookies.token;
-
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorised" });
+  }
   getUserFromToken(token)
     .then((user) => {
       res.json({ username: user.username });
@@ -93,15 +95,36 @@ app.post("/login", (req, res) => {
     }
   });
 });
+// app.get("/comments", (req, res) => {
+//   Comment.find().then((comments) => {
+//     if (!comments) console.log("comments not found");
+//     res.json(comments);
+//   });
+// });
+app.get("/comments", (req, res) => {
+  Comment.find()
+    .then((comments) => {
+      if (comments.length === 0) {
+        console.log("No comments found");
+        // Send a response indicating no comments found
+        return res.status(404).json({ message: "No comments found" });
+      }
+      // Send the comments as JSON response
+      res.json(comments);
+    })
+    .catch((error) => {
+      // Handle any errors that occur during the database query
+      console.error("Error fetching comments:", error);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+app.get("/comments/:id", (req, res) => {
+  Comment.findById(req.params.id).then((comment) => {
+    res.json(comment);
+  });
+});
 app.post("/logout", (req, res) => {
   res.cookie("token", "").send();
-});
-
-
-app.get('/comments', (req, res) => {
-  Comment.find().then(comments => {
-    res.json(comments);
-  });
 });
 
 app.listen(4000);
