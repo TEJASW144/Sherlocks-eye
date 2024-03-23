@@ -3,13 +3,16 @@ import AuthModal from "./AuthModal";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import AuthModalContext from "./AuthModalContext";
+import PostFormModalContext from "./PostFormModalContext";
 import UserContext from "./UserContext";
 import Routing from "./Routing";
+import PostFormModal from "./PostFormModal";
 
 // import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 
 function App() {
-  const [showAuthModal, setShowAuthModal] = useState(true);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showPostFormModal, setShowPostFormModal] = useState(false);
   const [user, setUser] = useState({});
 
   useEffect(() => {
@@ -38,9 +41,11 @@ function App() {
       <AuthModalContext.Provider
         value={{ show: showAuthModal, setShow: setShowAuthModal }}
       >
+        <PostFormModalContext.Provider value={{show:showPostFormModal,setShow:setShowPostFormModal}}></PostFormModalContext.Provider>
         <UserContext.Provider value={{ ...user, logout, setUser }}>
           <Routing />
           <AuthModal />
+          <PostFormModal/>
         </UserContext.Provider>
       </AuthModalContext.Provider>
     </>
