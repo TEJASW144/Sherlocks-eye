@@ -4,6 +4,7 @@ import Input from "./Input";
 import Textarea from "./Textarea";
 import Button from "./Button";
 import PostFormModalContext from "./PostFormModalContext";
+import axios from "axios";
 
 function PostFormModal() {
   const modalContext = useContext(PostFormModalContext);
@@ -13,6 +14,13 @@ function PostFormModal() {
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+
+function createPost(){
+  const data = {title,body};
+  axios.post('http://localhost:4000/comments', data).then(response => {
+
+  });
+}
 
   return (
     <div
@@ -38,8 +46,8 @@ function PostFormModal() {
           />
 
           <div className={"text-right"}>
-            <Button outline className={'px-4 py-2 mr-3'}>Cancel</Button>
-            <Button className={"px-4 py-2"}>POST</Button>
+            <Button onClick={() => modalContext.setShow(false)} outline className={'px-4 py-2 mr-3'}>Cancel</Button>
+            <Button onClick={() => createPost()} className={"px-4 py-2"}>POST</Button>
           </div>
         </div>
       </OutsideClickHandler>

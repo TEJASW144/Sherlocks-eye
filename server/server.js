@@ -20,11 +20,15 @@ app.use(
     credentials: true,
   })
 ); //mongodb+srv://adityagup780:zc9thTZGlXboGuut@cluster0.jls3etc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
 function getUserFromToken(token) {
-  const userInfo = jwt.verify(token, secret);
-  console.log(userInfo);
-  return User.findById(userInfo.id);
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorised" });
+  }
+  return getUserFromToken(token);
 }
+
 await mongoose
   .connect(
     "mongodb+srv://adityagup780:zc9thTZGlXboGuut@cluster0.jls3etc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -67,17 +71,15 @@ app.post("/register", (req, res) => {
 });
 app.get("/user", (req, res) => {
   const token = req.cookies.token;
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorised" });
-  }
-  getUserFromToken(token)
-    .then((user) => {
-      res.json({ username: user.username });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
+  getUserFromToken(token).then(user => {
+    res.json({ username: user.username });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.sendStatus(500);
+  });
+  
+    
 });
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -126,6 +128,20 @@ app.get("/comments/:id", (req, res) => {
 });
 app.post("/logout", (req, res) => {
   res.cookie("token", "").send();
+});
+
+app.post('/comments', (req,res)=>{
+  getUserFromToken(req.cookies.token).then(userInfo => {
+    const{title,body} = req.body;
+  const comment = new Comment({title,body,author:userInfo.username});
+  comment.save().then(savedComment => {
+    res.json(savedComment);
+  }).catch(console.log);
+  })
+  .catch(() => {
+    res.sendStatus(401);
+  });
+  
 });
 
 app.listen(4000);
