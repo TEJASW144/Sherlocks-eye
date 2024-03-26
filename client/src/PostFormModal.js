@@ -4,24 +4,35 @@ import Input from "./Input";
 import Textarea from "./Textarea";
 import Button from "./Button";
 import PostFormModalContext from "./PostFormModalContext";
+import AuthModalContext from "./AuthModalContext";
+import { Redirect } from "react-router-dom";
 import axios from "axios";
 
 function PostFormModal() {
   const modalContext = useContext(PostFormModalContext);
+  const authModalContext = useContext(AuthModalContext);
 
   const visibleClass = modalContext.show ? "block" : "hidden";
   //modalContext.setShow(false)
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-
-function createPost(){
-  const data = {title,body};
-  axios.post('http://localhost:4000/comments', data).then(response => {
-
-  });
-}
-
+  const [newPostId, setNewPostId] = useState(null);
+  function createPost() {
+    const data = { title, body };
+    // console.log(data);
+    axios
+      .post("http://localhost:4000/comments", data, { withCredentials: true })
+      .then((response) => {
+        setNewPostId(response.data._id);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) authModalContext.setShow("login");
+      });
+  }
+  if (newPostId) {
+    return <Redirect to={"/comments/" + newPostId} />;
+  }
   return (
     <div
       className={
@@ -46,8 +57,16 @@ function createPost(){
           />
 
           <div className={"text-right"}>
-            <Button onClick={() => modalContext.setShow(false)} outline className={'px-4 py-2 mr-3'}>Cancel</Button>
-            <Button onClick={() => createPost()} className={"px-4 py-2"}>POST</Button>
+            <Button
+              onClick={() => modalContext.setShow(false)}
+              outline
+              className={"px-4 py-2 mr-3"}
+            >
+              Cancel
+            </Button>
+            <Button onClick={() => createPost()} className={"px-4 py-2"}>
+              POST
+            </Button>
           </div>
         </div>
       </OutsideClickHandler>
