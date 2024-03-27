@@ -8,6 +8,7 @@ import User from "./models/User.js";
 import Comment from "./models/Comment.js";
 import cors from "cors";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
 
 const secret = "secret123";
 const app = express();
@@ -31,11 +32,9 @@ function getUserFromToken(token) {
   const userInfo = jwt.verify(token, secret);
   return User.findById(userInfo.id);
 }
-
+const URI = process.env.MONGODB_URI;
 await mongoose
-  .connect(
-    "mongodb+srv://adityagup780:zc9thTZGlXboGuut@cluster0.jls3etc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
+  .connect(URI)
   .then(() => {
     console.log("Connected to MongoDB");
   })
