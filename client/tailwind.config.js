@@ -5,13 +5,13 @@ module.exports = {
     extend: {
       colors: {
         reddit_dark: {
-          DEFAULT: '#03030303', 
+          DEFAULT: "#03030303",
         },
-        reddit_border:{
-          DEFAULT:'#343536',
-        }
-      }
+        reddit_border: {
+          DEFAULT: "#343536",
+        },
+      },
     },
   },
-  plugins: [],
-}
+  plugins: [require("tailwind-scrollbar")],
+};
