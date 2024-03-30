@@ -110,7 +110,7 @@ app.post("/login", (req, res) => {
 //   });
 // });
 app.get("/comments", (req, res) => {
-  Comment.find()
+  Comment.find({rootId:null})
     .sort({ postedAt: -1 })
     .then((comments) => {
       if (comments.length === 0) {
@@ -127,6 +127,13 @@ app.get("/comments", (req, res) => {
       res.status(500).json({ error: "Internal server error" });
     });
 });
+
+app.get('/comments/root/:rootId', (req,res) => {
+  Comment.find({rootId:req.params.rootId}).then((comments) => {
+    res.json(comments);
+  });  
+});
+
 app.get("/comments/:id", (req, res) => {
   Comment.findById(req.params.id).then((comment) => {
     res.json(comment);
@@ -150,8 +157,8 @@ app.post("/comments", (req, res) => {
     .then((userInfo) => {
       // const name = app.locals.myData;
       // console.log(name);
-      const { title, body } = req.body;
-      const comment = new Comment({ title, body, author: userInfo.username });
+      const { title, body, parentId, rootId } = req.body;
+      const comment = new Comment({ title, body, author: userInfo.username, parentId, rootId });
       comment
         .save()
         .then((savedComment) => {

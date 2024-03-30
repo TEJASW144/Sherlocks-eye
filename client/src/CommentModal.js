@@ -2,13 +2,21 @@ import PostContent from "./PostContent";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import OutsideClickHandler from "react-outside-click-handler";
+import CommentForm from "./CommentForm";
+import Comments from "./Comments";
 function CommentModal(props) {
   const [comment, setComment] = useState({});
+  const [comments, setComments] = useState([]);
   const visibleClass = props.open ? "block" : "hidden";
   useEffect(() => {
     axios.get("http://localhost:4000/comments/" + props.id).then((response) => {
       setComment(response.data);
     });
+    axios.get('http://localhost:4000/comments/root/'+props.id)
+      .then((response) => {
+        setComments(response.data);
+      })
+    
   }, [props.id]);
   function close() {
     setComment({});
@@ -34,8 +42,19 @@ function CommentModal(props) {
             }}
           >
             <PostContent open={true} {...comment} />
+            {!!comment && !!comment._id && (
+              <>
+                <hr className="border-reddit_border my-4" />
+                <CommentForm rootId={comment._id} parentId={comment._id} />
+                <hr className="border-reddit_border my-4" />
+                <Comments
+                  parentId={comment._id}
+                  rootId = {comment._id}
+                  comments={comments}
+                />
+              </>
+            )}
           </div>
-          {/* ID:{props.id}; */}
         </div>
       </OutsideClickHandler>
     </div>
