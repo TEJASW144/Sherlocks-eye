@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Post from "./Post";
+import Comment from "./Comment";
 function CommentPage(props) {
   console.log(props);
   const commentId = props.match.params.id;
   const [comment, setComment] = useState({});
+
   useEffect(() => {
     axios
       .get("http://localhost:4000/comments/" + commentId)
@@ -15,9 +17,9 @@ function CommentPage(props) {
 
   return (
     <div className=" bg-reddit_dark py-4">
-      {comment && <Post {...comment} open={true} />}
+      <Comment id={commentId} />
+      {/* {comment && <Post {...comment} open={true} />} */}
     </div>
   );
-  //   return <div>comment is this :{commentId} </div>;
 }
 export default CommentPage;

@@ -110,7 +110,7 @@ app.post("/login", (req, res) => {
 //   });
 // });
 app.get("/comments", (req, res) => {
-  Comment.find({rootId:null})
+  Comment.find({ rootId: null })
     .sort({ postedAt: -1 })
     .then((comments) => {
       if (comments.length === 0) {
@@ -128,10 +128,10 @@ app.get("/comments", (req, res) => {
     });
 });
 
-app.get('/comments/root/:rootId', (req,res) => {
-  Comment.find({rootId:req.params.rootId}).then((comments) => {
+app.get("/comments/root/:rootId", (req, res) => {
+  Comment.find({ rootId: req.params.rootId }).then((comments) => {
     res.json(comments);
-  });  
+  });
 });
 
 app.get("/comments/:id", (req, res) => {
@@ -158,7 +158,14 @@ app.post("/comments", (req, res) => {
       // const name = app.locals.myData;
       // console.log(name);
       const { title, body, parentId, rootId } = req.body;
-      const comment = new Comment({ title, body, author: userInfo.username, parentId, rootId });
+      const comment = new Comment({
+        title,
+        body,
+        author: userInfo.username,
+        postedAt: new Date(),
+        parentId,
+        rootId,
+      });
       comment
         .save()
         .then((savedComment) => {
