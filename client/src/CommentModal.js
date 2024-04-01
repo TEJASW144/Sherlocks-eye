@@ -5,23 +5,24 @@ import OutsideClickHandler from "react-outside-click-handler";
 import CommentForm from "./CommentForm";
 import Comments from "./Comments";
 import RootCommentContext from "./RootCommentContext";
+import Comment from "./Comment";
 function CommentModal(props) {
   const [comment, setComment] = useState({});
-  const [comments, setComments] = useState([]);
+  //const [comments, setComments] = useState([]);
   // const rootCommentInfo=useContext(RootCommentContext);
   const visibleClass = props.open ? "block" : "hidden";
-  function refreshComments() {
+  /*function refreshComments() {
     axios
       .get("http://localhost:4000/comments/root/" + props.id)
       .then((response) => {
         setComments(response.data);
       });
-  }
+  }*/
   useEffect(() => {
     axios.get("http://localhost:4000/comments/" + props.id).then((response) => {
       setComment(response.data);
     });
-    refreshComments();
+    //refreshComments();
   }, [props.id]);
   function close() {
     setComment({});
@@ -47,26 +48,7 @@ function CommentModal(props) {
               scrollbarWidth: "thin",
             }}
           >
-            <PostContent open={true} {...comment} />
-            {!!comment && !!comment._id && (
-              <>
-                <hr className="border-reddit_border my-4" />
-                <CommentForm
-                  rootId={comment._id}
-                  parentId={comment._id}
-                  showAuthor={true}
-                  onSubmit={() => refreshComments()}
-                />
-                <hr className="border-reddit_border my-4" />
-                <RootCommentContext.Provider value={{ refreshComments }}>
-                  <Comments
-                    parentId={comment._id}
-                    rootId={comment._id}
-                    comments={comments}
-                  />
-                </RootCommentContext.Provider>
-              </>
-            )}
+            <Comment comment={comment} id={props.id}/>
           </div>
         </div>
       </OutsideClickHandler>

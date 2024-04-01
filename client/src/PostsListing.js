@@ -19,7 +19,7 @@ function PostsListing() {
   return (
     <div className="bg-gray-950">
       {comments.map((comment) => (
-        <Post {...comment} />
+        <Post {...comment} isListing={true} />
       ))}
     </div>
   );

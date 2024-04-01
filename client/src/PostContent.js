@@ -1,3 +1,6 @@
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
+
 function PostContent(props) {
   return (
     <div>
@@ -6,7 +9,9 @@ function PostContent(props) {
       </h5>
 
       <h2 className="text-3xl mb-3 text-gray-200">{props.title}</h2>
-      <div className="text-sm leading-6 text-gray-200">{props.body}</div>
+      <div className="text-sm leading-6">
+        <ReactMarkdown remarkPlugins={[gfm]} children={props.body} />
+      </div>
     </div>
   );
 }

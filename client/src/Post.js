@@ -18,10 +18,15 @@ function Post(props) {
     window.location.href = url;
   }
 
-  const postClasses =
-    " block border rounded-md border-gray-950 hover:border-gray-600 bg-gray-900 p-2 cursor-pointer";
+  let postClasses =
+    " block border rounded-md hover:border-gray-600 cursor-pointer";
+  if(props.isListing){
+    postClasses += "bg-gray-900 p-3 mx-6 border border-reddit_border";
+  }else{
+    postClasses += "border-none";
+  }
   return (
-    <div className="px-6 text-gray-400 mb-4">
+    <div className="text-gray-400 mb-4">
       {props.open && (
         <div className={postClasses}>
           <PostContent {...props} />

@@ -3,22 +3,13 @@ import axios from "axios";
 import Post from "./Post";
 import Comment from "./Comment";
 function CommentPage(props) {
-  console.log(props);
   const commentId = props.match.params.id;
-  const [comment, setComment] = useState({});
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/comments/" + commentId)
-      .then((response) => {
-        setComment(response.data);
-      });
-  }, []);
 
   return (
-    <div className=" bg-reddit_dark py-4">
-      <Comment id={commentId} />
-      {/* {comment && <Post {...comment} open={true} />} */}
+    <div className=" bg-black py-4 px-6">
+      <div className="bg-gray-900 p-3 rounded-md">
+        <Comment id={commentId} />
+      </div>
     </div>
   );
 }

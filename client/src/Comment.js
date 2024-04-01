@@ -17,11 +17,16 @@ function Comment(props) {
       });
   }
   useEffect(() => {
-    axios.get("http://localhost:4000/comments/" + props.id).then((response) => {
-      setComment(response.data);
-    });
+    if (props.comment) {
+      setComment(props.comment);
+    } else {
+      axios.get('http://localhost:4000/comments/'+props.id)
+        .then(response => {
+          setComment(response.data);
+        });
+    }
     refreshComments();
-  }, [props.id]);
+  }, [props.id, props.comment]);
 
   return (
     <>

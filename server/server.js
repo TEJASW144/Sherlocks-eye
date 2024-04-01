@@ -129,7 +129,7 @@ app.get("/comments", (req, res) => {
 });
 
 app.get("/comments/root/:rootId", (req, res) => {
-  Comment.find({ rootId: req.params.rootId }).then((comments) => {
+  Comment.find({ rootId: req.params.rootId }).sort({ postedAt: -1 }).then((comments) => {
     res.json(comments);
   });
 });
