@@ -29,8 +29,8 @@ There are various features in our project. Some of them are completed and we are
 
 ## Tech Stack
 
-- **FRONTENED**-React Js, Tailwind.
-- **BACKENED**-Node Js, Express Js.
+- **FRONTEND**-React Js, Tailwind.
+- **BACKEND**-Node Js, Express Js.
 - **DATABASE**-MongoDB.
 
 ## Future Additions
